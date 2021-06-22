@@ -10,6 +10,24 @@ par_distC <- function(cols, mat) {
     .Call(`_proteoCpp_par_distC`, cols, mat)
 }
 
+#' Site combination.
+#'
+#' @param ns Names.
+#' @param ps positions.
+#' @export
+vmcombC <- function(ns, ps) {
+    .Call(`_proteoCpp_vmcombC`, ns, ps)
+}
+
+#' Multiply applications of `vmcombC`.
+#'
+#' @param ns Names.
+#' @param ps positions.
+#' @export
+mvmcombC <- function(ns, ps) {
+    .Call(`_proteoCpp_mvmcombC`, ns, ps)
+}
+
 # Register entry points for exported C++ functions
 methods::setLoadAction(function(ns) {
     .Call('_proteoCpp_RcppExport_registerCCallable', PACKAGE = 'proteoCpp')
