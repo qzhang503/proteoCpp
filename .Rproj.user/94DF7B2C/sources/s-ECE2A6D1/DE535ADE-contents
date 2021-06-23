@@ -24,7 +24,7 @@ List par_distC(IntegerVector cols, List mat) {
     if (i % 1000 == 0) Rcpp::checkUserInterrupt();
 
     LogicalVector y = as<LogicalVector>(mat[i]);
-    
+
     int k = 0;
 
     for (int j = i; j < len_m; j++) {

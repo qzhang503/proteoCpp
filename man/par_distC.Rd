@@ -9,7 +9,7 @@ par_distC(cols, mat)
 \arguments{
 \item{cols}{A range of column indexes.}
 
-\item{mat}{A logical matrix.}
+\item{mat}{A logical matrix (split into lists).}
 }
 \description{
 Parallel distance calculations.

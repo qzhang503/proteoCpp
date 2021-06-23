@@ -4,7 +4,7 @@
 #' Parallel distance calculations.
 #'
 #' @param cols A range of column indexes.
-#' @param mat A logical matrix.
+#' @param mat A logical matrix (split into lists).
 #' @export
 par_distC <- function(cols, mat) {
     .Call(`_proteoCpp_par_distC`, cols, mat)
