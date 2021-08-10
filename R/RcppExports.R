@@ -10,22 +10,12 @@ par_distC <- function(cols, mat) {
     .Call(`_proteoCpp_par_distC`, cols, mat)
 }
 
-#' Site combination.
+#' Extracts the lower triangular of a logical distance matrix.
 #'
-#' @param ns Names.
-#' @param ps positions.
+#' @param m A logical matrix.
 #' @export
-vmcombC <- function(ns, ps) {
-    .Call(`_proteoCpp_vmcombC`, ns, ps)
-}
-
-#' Multiply applications of `vmcombC`.
-#'
-#' @param ns Names.
-#' @param ps positions.
-#' @export
-mvmcombC <- function(ns, ps) {
-    .Call(`_proteoCpp_mvmcombC`, ns, ps)
+to_lgldistC <- function(m) {
+    .Call(`_proteoCpp_to_lgldistC`, m)
 }
 
 # Register entry points for exported C++ functions

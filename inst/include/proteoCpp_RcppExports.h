@@ -45,17 +45,17 @@ namespace proteoCpp {
         return Rcpp::as<List >(rcpp_result_gen);
     }
 
-    inline List vmcombC(DataFrame ns, DataFrame ps) {
-        typedef SEXP(*Ptr_vmcombC)(SEXP,SEXP);
-        static Ptr_vmcombC p_vmcombC = NULL;
-        if (p_vmcombC == NULL) {
-            validateSignature("List(*vmcombC)(DataFrame,DataFrame)");
-            p_vmcombC = (Ptr_vmcombC)R_GetCCallable("proteoCpp", "_proteoCpp_vmcombC");
+    inline LogicalVector to_lgldistC(LogicalMatrix m) {
+        typedef SEXP(*Ptr_to_lgldistC)(SEXP);
+        static Ptr_to_lgldistC p_to_lgldistC = NULL;
+        if (p_to_lgldistC == NULL) {
+            validateSignature("LogicalVector(*to_lgldistC)(LogicalMatrix)");
+            p_to_lgldistC = (Ptr_to_lgldistC)R_GetCCallable("proteoCpp", "_proteoCpp_to_lgldistC");
         }
         RObject rcpp_result_gen;
         {
             RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_vmcombC(Shield<SEXP>(Rcpp::wrap(ns)), Shield<SEXP>(Rcpp::wrap(ps)));
+            rcpp_result_gen = p_to_lgldistC(Shield<SEXP>(Rcpp::wrap(m)));
         }
         if (rcpp_result_gen.inherits("interrupted-error"))
             throw Rcpp::internal::InterruptedException();
@@ -63,28 +63,7 @@ namespace proteoCpp {
             throw Rcpp::LongjumpException(rcpp_result_gen);
         if (rcpp_result_gen.inherits("try-error"))
             throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<List >(rcpp_result_gen);
-    }
-
-    inline List mvmcombC(List ns, List ps) {
-        typedef SEXP(*Ptr_mvmcombC)(SEXP,SEXP);
-        static Ptr_mvmcombC p_mvmcombC = NULL;
-        if (p_mvmcombC == NULL) {
-            validateSignature("List(*mvmcombC)(List,List)");
-            p_mvmcombC = (Ptr_mvmcombC)R_GetCCallable("proteoCpp", "_proteoCpp_mvmcombC");
-        }
-        RObject rcpp_result_gen;
-        {
-            RNGScope RCPP_rngScope_gen;
-            rcpp_result_gen = p_mvmcombC(Shield<SEXP>(Rcpp::wrap(ns)), Shield<SEXP>(Rcpp::wrap(ps)));
-        }
-        if (rcpp_result_gen.inherits("interrupted-error"))
-            throw Rcpp::internal::InterruptedException();
-        if (Rcpp::internal::isLongjumpSentinel(rcpp_result_gen))
-            throw Rcpp::LongjumpException(rcpp_result_gen);
-        if (rcpp_result_gen.inherits("try-error"))
-            throw Rcpp::exception(Rcpp::as<std::string>(rcpp_result_gen).c_str());
-        return Rcpp::as<List >(rcpp_result_gen);
+        return Rcpp::as<LogicalVector >(rcpp_result_gen);
     }
 
 }

@@ -8,6 +8,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // par_distC
 List par_distC(IntegerVector cols, List mat);
 static SEXP _proteoCpp_par_distC_try(SEXP colsSEXP, SEXP matSEXP) {
@@ -43,57 +48,21 @@ RcppExport SEXP _proteoCpp_par_distC(SEXP colsSEXP, SEXP matSEXP) {
     UNPROTECT(1);
     return rcpp_result_gen;
 }
-// vmcombC
-List vmcombC(DataFrame ns, DataFrame ps);
-static SEXP _proteoCpp_vmcombC_try(SEXP nsSEXP, SEXP psSEXP) {
+// to_lgldistC
+LogicalVector to_lgldistC(LogicalMatrix m);
+static SEXP _proteoCpp_to_lgldistC_try(SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< DataFrame >::type ns(nsSEXP);
-    Rcpp::traits::input_parameter< DataFrame >::type ps(psSEXP);
-    rcpp_result_gen = Rcpp::wrap(vmcombC(ns, ps));
+    Rcpp::traits::input_parameter< LogicalMatrix >::type m(mSEXP);
+    rcpp_result_gen = Rcpp::wrap(to_lgldistC(m));
     return rcpp_result_gen;
 END_RCPP_RETURN_ERROR
 }
-RcppExport SEXP _proteoCpp_vmcombC(SEXP nsSEXP, SEXP psSEXP) {
+RcppExport SEXP _proteoCpp_to_lgldistC(SEXP mSEXP) {
     SEXP rcpp_result_gen;
     {
         Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_proteoCpp_vmcombC_try(nsSEXP, psSEXP));
-    }
-    Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
-    if (rcpp_isInterrupt_gen) {
-        UNPROTECT(1);
-        Rf_onintr();
-    }
-    bool rcpp_isLongjump_gen = Rcpp::internal::isLongjumpSentinel(rcpp_result_gen);
-    if (rcpp_isLongjump_gen) {
-        Rcpp::internal::resumeJump(rcpp_result_gen);
-    }
-    Rboolean rcpp_isError_gen = Rf_inherits(rcpp_result_gen, "try-error");
-    if (rcpp_isError_gen) {
-        SEXP rcpp_msgSEXP_gen = Rf_asChar(rcpp_result_gen);
-        UNPROTECT(1);
-        Rf_error(CHAR(rcpp_msgSEXP_gen));
-    }
-    UNPROTECT(1);
-    return rcpp_result_gen;
-}
-// mvmcombC
-List mvmcombC(List ns, List ps);
-static SEXP _proteoCpp_mvmcombC_try(SEXP nsSEXP, SEXP psSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::traits::input_parameter< List >::type ns(nsSEXP);
-    Rcpp::traits::input_parameter< List >::type ps(psSEXP);
-    rcpp_result_gen = Rcpp::wrap(mvmcombC(ns, ps));
-    return rcpp_result_gen;
-END_RCPP_RETURN_ERROR
-}
-RcppExport SEXP _proteoCpp_mvmcombC(SEXP nsSEXP, SEXP psSEXP) {
-    SEXP rcpp_result_gen;
-    {
-        Rcpp::RNGScope rcpp_rngScope_gen;
-        rcpp_result_gen = PROTECT(_proteoCpp_mvmcombC_try(nsSEXP, psSEXP));
+        rcpp_result_gen = PROTECT(_proteoCpp_to_lgldistC_try(mSEXP));
     }
     Rboolean rcpp_isInterrupt_gen = Rf_inherits(rcpp_result_gen, "interrupted-error");
     if (rcpp_isInterrupt_gen) {
@@ -119,8 +88,7 @@ static int _proteoCpp_RcppExport_validate(const char* sig) {
     static std::set<std::string> signatures;
     if (signatures.empty()) {
         signatures.insert("List(*par_distC)(IntegerVector,List)");
-        signatures.insert("List(*vmcombC)(DataFrame,DataFrame)");
-        signatures.insert("List(*mvmcombC)(List,List)");
+        signatures.insert("LogicalVector(*to_lgldistC)(LogicalMatrix)");
     }
     return signatures.find(sig) != signatures.end();
 }
@@ -128,16 +96,14 @@ static int _proteoCpp_RcppExport_validate(const char* sig) {
 // registerCCallable (register entry points for exported C++ functions)
 RcppExport SEXP _proteoCpp_RcppExport_registerCCallable() { 
     R_RegisterCCallable("proteoCpp", "_proteoCpp_par_distC", (DL_FUNC)_proteoCpp_par_distC_try);
-    R_RegisterCCallable("proteoCpp", "_proteoCpp_vmcombC", (DL_FUNC)_proteoCpp_vmcombC_try);
-    R_RegisterCCallable("proteoCpp", "_proteoCpp_mvmcombC", (DL_FUNC)_proteoCpp_mvmcombC_try);
+    R_RegisterCCallable("proteoCpp", "_proteoCpp_to_lgldistC", (DL_FUNC)_proteoCpp_to_lgldistC_try);
     R_RegisterCCallable("proteoCpp", "_proteoCpp_RcppExport_validate", (DL_FUNC)_proteoCpp_RcppExport_validate);
     return R_NilValue;
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_proteoCpp_par_distC", (DL_FUNC) &_proteoCpp_par_distC, 2},
-    {"_proteoCpp_vmcombC", (DL_FUNC) &_proteoCpp_vmcombC, 2},
-    {"_proteoCpp_mvmcombC", (DL_FUNC) &_proteoCpp_mvmcombC, 2},
+    {"_proteoCpp_to_lgldistC", (DL_FUNC) &_proteoCpp_to_lgldistC, 1},
     {"_proteoCpp_RcppExport_registerCCallable", (DL_FUNC) &_proteoCpp_RcppExport_registerCCallable, 0},
     {NULL, NULL, 0}
 };

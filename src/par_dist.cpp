@@ -44,7 +44,29 @@ List par_distC(IntegerVector cols, List mat) {
   return out;
 }
 
-
 // [[Rcpp::interfaces(r, cpp)]]
 
+
+//' Extracts the lower triangular of a logical distance matrix.
+//'
+//' @param m A logical matrix.
+//' @export
+// [[Rcpp::export]]
+LogicalVector to_lgldistC(LogicalMatrix m) {
+  
+  int nrow = m.nrow();
+  
+  LogicalVector vec(nrow * (nrow - 1) / 2);
+  
+  int k = 0;
+  
+  for (int j = 0; j < (nrow - 1); j++) {
+    for (int i = j+1; i < nrow; i++) {
+      vec[k++] = m(i, j);
+    }
+  }
+  
+  return vec;
+}
+// [[Rcpp::interfaces(r, cpp)]]
 
